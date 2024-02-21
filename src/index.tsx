@@ -9,13 +9,13 @@ import { store } from "./redux/store";
 const rootElement = document.getElementById("root") as HTMLElement;
 
 const root = createRoot(rootElement);
-import * as serviceWorker from "./service-worker";
+
 root.render(
   <Provider store={store}>
     <App />
   </Provider>
 );
-serviceWorker.register();
+
 // if ("serviceWorker" in navigator) {
 //   window.addEventListener("load", () => {
 //     navigator.serviceWorker
