@@ -14,8 +14,10 @@
 2. **Task Management Features:**
 
    1. **User Authentication:**
+
       - New users can seamlessly create an account on our App without password.
       - Returning users can easily access their accounts.
+
    2. **Task Creation:**
 
       - Users can create new tasks effortlessly.
@@ -41,7 +43,7 @@ To run program, run the following command.
 
 1. Clone the repository: `git clone https://github.com/hocineismail/cendas-mini-task.git`
 
-## 🔨 Running Code
+## 👻 Running Code
 
 To run program, run the following command.
 
@@ -53,7 +55,7 @@ To run program, run the following command.
 
 1. Open your browser on `http://localhost:3000` to see the page
 
-### 🔨 Running Test
+### 🔌 Running Test
 
 1. To run tests, run the following command.
 
@@ -61,13 +63,21 @@ To run program, run the following command.
   npm run test
 ```
 
-### 🔨 Production
+### 🏢 Production
 
 1. To build the production version, run the following command.
 
 ```bash
   npm run build
 ```
+
+### 😌 Answers
+
+I completed the mini tasks in 3 days, including:
+
+- Conception and Strategies
+- Creating components,for UI with styled-components [Strecture](#strecture)
+- Integrating functionalities as per requirements
 
 ## Task 1
 
@@ -118,7 +128,7 @@ Considering you have an intricate backend with numerous functionalities and a fr
 - **http://localhost:3000/**: Home page that contains tasks
 - **http://localhost:3000/login**: Login page that contains form to `sign up` or `sign in`
 
-## Directory Hierarchy
+## Directory Hierarchy <a id="strecture"></a>
 
 ```
 
