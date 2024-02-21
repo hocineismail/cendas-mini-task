@@ -53,6 +53,10 @@ export const tasksSlice = createSlice({
                     return item
                 })
 
+            }).addCase(addChecklistAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             }).addCase(addItemAsync.fulfilled, (state, action) => {
 
                 const { task_id, checklist_id, item } = action.payload
@@ -69,10 +73,12 @@ export const tasksSlice = createSlice({
                     return task
                 })
 
+            }).addCase(addItemAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             }).addCase(updateItemStatusAsync.fulfilled, (state, action) => {
-
                 const { task_id, checklist_id, item_id, item } = action.payload;
-
                 state.tasks = state.tasks.map((task: ITaskItem) => {
                     if (task._id === task_id) {
                         const updatedChecklists = task.checklists.map((checklist: IChecklistItem) => {
@@ -95,8 +101,16 @@ export const tasksSlice = createSlice({
                     }
                     return task;
                 });
+            }).addCase(updateItemStatusAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             }).addCase(deleteTaskAsync.fulfilled, (state, action) => {
                 state.tasks = state.tasks.filter((item: ITaskItem) => item._id !== action.payload)
+            }).addCase(deleteTaskAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             }).addCase(deleteChecklistAsync.fulfilled, (state, action) => {
                 console.log(action)
                 const {
@@ -109,6 +123,10 @@ export const tasksSlice = createSlice({
                     }
                     return item
                 })
+            }).addCase(deleteChecklistAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             }).addCase(deleteItemAsync.fulfilled, (state, action) => {
 
                 const { task_id, checklist_id, item_id } = action.payload;
@@ -128,6 +146,10 @@ export const tasksSlice = createSlice({
                     }
                     return task;
                 })
+            }).addCase(deleteItemAsync.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action?.error?.message || "Something wrong"
+                state.isLoading = false
             })
 
 
