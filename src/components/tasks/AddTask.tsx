@@ -16,7 +16,7 @@ const StyledIcon = styled(LuPlus)`
 
 export default function AddTask() {
   // Use a single state for the form
-  const [formData, setFormData] = React.useState({
+  const [formState, setformState] = React.useState({
     value: "",
     description: "",
     open: false,
@@ -27,8 +27,12 @@ export default function AddTask() {
   const dispatch = useAppDispatch();
   const onSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    if (formState.value.replace(/\s/g, "") === "") {
+      alert("Enter correct value");
+      return;
+    }
 
-    setFormData({
+    setformState({
       value: "",
       description: "",
       open: false,
@@ -38,17 +42,17 @@ export default function AddTask() {
     // Dispatch the addTaskAsync action with the form data
     dispatch(
       addTaskAsync({
-        title: formData.value,
-        description: formData.description,
-        selectedColor: formData.selectedColor,
+        title: formState.value,
+        description: formState.description,
+        selectedColor: formState.selectedColor,
       })
     );
     setOpen(false);
   };
 
   const handleColorSelection = (color: string) => {
-    // Update selectedColor in formData
-    setFormData((prevData) => ({ ...prevData, selectedColor: color }));
+    // Update selectedColor in formState
+    setformState((prevData) => ({ ...prevData, selectedColor: color }));
   };
 
   return (
@@ -69,9 +73,9 @@ export default function AddTask() {
             type="text"
             name="Task"
             placeholder="Add new Task"
-            value={formData.value}
+            value={formState.value}
             onChange={(e) =>
-              setFormData((prevData) => ({
+              setformState((prevData) => ({
                 ...prevData,
                 value: e.target.value,
               }))
@@ -82,10 +86,10 @@ export default function AddTask() {
             type="text"
             name="description"
             placeholder="Add Description"
-            value={formData.description}
-            color={formData.selectedColor}
+            value={formState.description}
+            color={formState.selectedColor}
             onChange={(e) =>
-              setFormData((prevData) => ({
+              setformState((prevData) => ({
                 ...prevData,
                 description: e.target.value,
               }))

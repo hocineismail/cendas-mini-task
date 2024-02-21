@@ -20,7 +20,7 @@ export default function ChecklistsSection({ task_id, checklists }: Props) {
   return (
     <ItemList>
       <List>
-        {checklists?.map((item: any, index: number) => (
+        {checklists?.map((item: IChecklistItem, index: number) => (
           <React.Fragment key={item._id}>
             <ChecklistDropDown
               index={index}

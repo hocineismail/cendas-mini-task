@@ -1,11 +1,10 @@
-import React from "react";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { Provider } from "react-redux";
-import { configureStore, createAsyncThunk } from "@reduxjs/toolkit"; // Assuming this path is correct
+import { configureStore } from "@reduxjs/toolkit"; // Assuming this path is correct
 import TasksSection from "./TasksSection"; // Assuming this path is correct
 
-import tasksSlice from "../../redux/reducers/tasksSlice";
+import tasksSlice from "@store/reducers/tasksSlice";
 
 describe("TasksSection", () => {
   let store: ReturnType<typeof configureStore>;
@@ -17,9 +16,7 @@ describe("TasksSection", () => {
       },
     });
   });
-  beforeEach(() => {
-    jest.spyOn(console, "warn").mockImplementation(() => {});
-  });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -56,7 +53,7 @@ describe("TasksSection", () => {
         },
       },
     });
-    console.log("Rendered component:", screen.debug());
+
     // Wait for the async action to be resolved
     await act(async () => {
       // Wait for the async action to be resolved

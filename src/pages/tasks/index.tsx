@@ -1,5 +1,3 @@
-// Import necessary components
-import React from "react";
 import AddTask from "@component/tasks/AddTask";
 import Layout from "@component/layout/Layout";
 import TasksSection from "@component/tasks/TasksSection";

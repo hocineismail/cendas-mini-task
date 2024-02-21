@@ -49,8 +49,7 @@ export const tasksSlice = createSlice({
                 })
 
             }).addCase(addItemAsync.fulfilled, (state, action) => {
-                console.log("Try to fix it")
-                console.log(action.payload)
+
                 const { task_id, checklist_id, item } = action.payload
                 const newData = { ...item._data }
                 state.tasks = state?.tasks?.map((task: ITaskItem) => {
@@ -91,8 +90,6 @@ export const tasksSlice = createSlice({
                     }
                     return task;
                 });
-
-                // state.tasks = [action.payload]
             })
     },
 })

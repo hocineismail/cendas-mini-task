@@ -3,7 +3,7 @@ import getDatabase from "@db/database";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
-import { ITask, IChecklist, ITodo } from '@type/types';
+import { ITask, IChecklist, ITodo, IUpdateStatus } from '@type/types';
 import { ItemDocType } from "@type/schema";
 
 
@@ -11,41 +11,39 @@ import { ItemDocType } from "@type/schema";
 
 // Define the async thunk
 const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async () => {
-    try {
-        const db = await getDatabase();
-        const currentUser = await db.users.findOne({
-            selector: {
-                username: localStorage.getItem("username")
-            }
-        }).exec();
 
-        if (!currentUser) {
-            throw new Error('User not Found');
+    const db = await getDatabase();
+    const currentUser = await db.users.findOne({
+        selector: {
+            username: localStorage.getItem("username")
         }
-        const tasks = await db.tasks.find().where("user").eq(currentUser._id).exec();
-        const taskPromise = tasks.map(async task => {
+    }).exec();
 
-            const checklists = await db.checklists.find().where("task").eq(task._id).exec();
-            const checkiltsPrimise = checklists.map(async item => {
-                const items = await db.items.find().where("checklist").eq(item._id).exec()
-                let result = {
-                    ...item._data,
-                    items: items.map((item) => item._data)
-                }
-                return result
-            });
-            const checklistsWithItem = await Promise.all(checkiltsPrimise);
-            let result = {
-                ...task._data,
-                checklists: checklistsWithItem
+    if (!currentUser) {
+        throw new Error('User not Found');
+    }
+    const tasks = await db.tasks.find().where("user").eq(currentUser._id).exec();
+    const taskPromise = tasks.map(async task => {
+
+        const checklists = await db.checklists.find().where("task").eq(task._id).exec();
+        const checkiltsPrimise = checklists.map(async item => {
+            const items = await db.items.find().where("checklist").eq(item._id).exec()
+            const result = {
+                ...item._data,
+                items: items.map((item) => item._data)
             }
             return result
         });
-        const usersWithTasks = await Promise.all(taskPromise);
-        return usersWithTasks;
-    } catch (error) {
-        throw error
-    }
+        const checklistsWithItem = await Promise.all(checkiltsPrimise);
+        const result = {
+            ...task._data,
+            checklists: checklistsWithItem
+        }
+        return result
+    });
+    const usersWithTasks = await Promise.all(taskPromise);
+    return usersWithTasks;
+
 });
 
 
@@ -108,7 +106,7 @@ const addChecklistAsync = createAsyncThunk('tasks/addChecklist', async ({ task_i
         };
 
         // Insert the new checklist into the database
-        let checklist = await db.checklists.insert(newChecklist);
+        const checklist = await db.checklists.insert(newChecklist);
 
         // Return the checklist data along with an empty items array to avoid error on item map()
         return {
@@ -118,7 +116,7 @@ const addChecklistAsync = createAsyncThunk('tasks/addChecklist', async ({ task_i
 
     } catch (error) {
         // Throw an error if there's an issue with the database operation
-        throw new Error('Failed to fetch newChecklists');
+        return new Error('Failed to fetch newChecklists');
     }
 });
 
@@ -156,7 +154,7 @@ const addItemAsync = createAsyncThunk('tasks/addItem', async ({ checklist_id, em
 });
 
 // Create an asynchronous thunk for updating an item's status
-const updateItemStatusAsync = createAsyncThunk('tasks/updateItemStatus', async ({ checklist_id, item, task_id, item_id }: any) => {
+const updateItemStatusAsync = createAsyncThunk('tasks/updateItemStatus', async ({ checklist_id, task_id, item_id }: IUpdateStatus) => {
     try {
         // Find the current task in the database
         const db = await getDatabase();

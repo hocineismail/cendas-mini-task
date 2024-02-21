@@ -4,12 +4,12 @@ export interface UserDocType {
     username: string;
     createdAt: number;
     updatedAt: number;
-};
+}
 export interface DescriptionDocType {
     text: string;
     color: string;
 
-};
+}
 export interface TaskDocType {
     _id: string;
     title: string;
@@ -17,7 +17,7 @@ export interface TaskDocType {
     description: DescriptionDocType
     createdAt: number;
     updatedAt: number;
-};
+}
 
 export interface ItemDocType {
     _id: string;
@@ -29,7 +29,7 @@ export interface ItemDocType {
     checklist: string
     createdAt: number;
     updatedAt: number;
-};
+}
 
 export interface ChecklistDocType {
     _id: string;
@@ -37,5 +37,5 @@ export interface ChecklistDocType {
     task: string
     createdAt: number;
     updatedAt: number;
-};
+}
 

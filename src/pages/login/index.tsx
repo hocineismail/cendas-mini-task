@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import getDatabase from "@db/database";
 import { v4 as uuidv4 } from "uuid";
-
-// Import custom components
 import Button from "@component/button/Button";
 import Input from "@component/input/Input";
 
@@ -15,9 +13,13 @@ export default function Login() {
   const navigate = useNavigate();
 
   // Function to handle form submission
-  const onSubmit = async (e: any) => {
-    e.preventDefault();
-
+  const onSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    // alert dispay in the emty username case
+    if (value.replace(/\s/g, "") === "") {
+      alert("Enter username");
+      return;
+    }
     // Get the database instance
     const db = await getDatabase();
 

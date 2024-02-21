@@ -26,11 +26,6 @@ describe("ItemList component", () => {
     expect(listItemElement).toHaveStyle("margin: 0");
     expect(listItemElement).toHaveStyle("border-bottom: 1px solid #e1e3e5");
     expect(listItemElement).toHaveStyle("border-top: 1px solid #e1e3e5");
-    // expect(listItemElement).toHaveStyle("font-weight: 300");
-    // expect(listItemElement).toHaveStyle("font-weight: 400");
-    // expect(listItemElement).toHaveStyle("font-weight: 500");
-    // expect(listItemElement).toHaveStyle("text-decoration: line-through");
-    // expect(listItemElement).toHaveStyle("opacity: 0.5");
   });
 
   // Add more test cases for different combinations of props if needed

@@ -38,7 +38,7 @@ export default function Icon({ text, emoji }: Props) {
 
 // Function to get the first two letters from a string (or default to "A" if no text is provided)
 function getTwoLetters({ text = "A" }: ILetters): string {
-  let splittedText: string[] = text.split(" ");
+  const splittedText: string[] = text.split(" ");
 
   // If there is only one word, return the first letter
   if (splittedText.length === 1) {

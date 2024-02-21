@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start:production": "webpack --config webpack.config.js && serve -s build",
-    "start": "webpack serve",
+    "start": "webpack --config webpack.config.js && serve -s build",
+    "start:dev": "webpack serve",
     "format": "prettier --write src/**/*.ts{,x}",
     "lint": "tsc --noEmit && eslint src/**/*.ts{,x}",
     "prebuild": "rimraf ./build",
@@ -21,7 +21,6 @@
     "@reduxjs/toolkit": "^2.2.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/react": "^18.2.55",

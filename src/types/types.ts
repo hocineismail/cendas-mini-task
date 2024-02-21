@@ -1,4 +1,4 @@
-import { ChecklistDocType, ItemDocType, TaskDocType, UserDocType } from "./schema"
+import { ChecklistDocType, ItemDocType, TaskDocType } from "./schema"
 
 export interface ITask {
     title: string

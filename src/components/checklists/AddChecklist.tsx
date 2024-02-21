@@ -2,8 +2,8 @@ import Input from "@component/input/Input";
 import Button from "@component/button/Button";
 import React from "react";
 import Modal from "@component/modal/Modal";
-import { useAppDispatch } from "../../redux/hooks";
-import { addChecklistAsync } from "../../redux/actions/tasksActions";
+import { useAppDispatch } from "@store/hooks";
+import { addChecklistAsync } from "@store/actions/tasksActions";
 import styled from "styled-components";
 import { LuPlus } from "react-icons/lu";
 
@@ -16,18 +16,22 @@ const StyledIcon = styled(LuPlus)`
 type Props = {
   task_id: string;
 };
-type TaskType = {
-  id: number;
-  name: string;
-  status: boolean;
-};
+// type TaskType = {
+//   id: number;
+//   name: string;
+//   status: boolean;
+// };
 export default function AddChecklist({ task_id }: Props) {
   const [value, setValue] = React.useState<string>("");
   const [open, setOpen] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (value.replace(/\s/g, "") === "") {
+      alert("Enter correct value");
+      return;
+    }
     setValue("");
 
     setOpen(false);

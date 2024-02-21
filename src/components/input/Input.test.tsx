@@ -3,14 +3,15 @@ import Input from "./Input";
 
 describe("Input component", () => {
   it("renders correctly", () => {
-    const { getByLabelText, getByPlaceholderText, getByTestId } = render(
+    const onChangeMock = jest.fn();
+    const { getByPlaceholderText, getByTestId } = render(
       <Input
         label="Test Label"
         type="text"
         name="testInput"
         placeholder="Test Placeholder"
         value=""
-        onChange={() => {}}
+        onChange={onChangeMock}
       />
     );
 
@@ -23,7 +24,7 @@ describe("Input component", () => {
 
   it("triggers onChange callback when input value changes", () => {
     const onChangeMock = jest.fn();
-    const { getByPlaceholderText, getByTestId } = render(
+    const { getByTestId } = render(
       <Input
         label="Test Label"
         type="text"

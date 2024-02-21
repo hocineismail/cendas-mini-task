@@ -39,8 +39,12 @@ export default function AddItemTodo({ checklist_id, task_id }: Props) {
   const dispatch = useAppDispatch();
 
   // Function to handle form submission
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (formState.value.replace(/\s/g, "") === "") {
+      alert("Enter correct value");
+      return;
+    }
 
     // Reset form inputs and close modal
     setFormState((prevState) => ({

@@ -1,10 +1,10 @@
 import React from "react";
 import { render, fireEvent, waitFor, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import AddItemTodo from "./AddItemTodo";
-import { configureStore, createAsyncThunk } from "@reduxjs/toolkit"; // Assuming this path is correct
+import { configureStore } from "@reduxjs/toolkit"; // Assuming this path is correct
 // Mock your redux hooks or providers if needed
-import tasksSlice from "../../redux/reducers/tasksSlice";
+import tasksSlice from "@store/reducers/tasksSlice";
 import { Provider } from "react-redux";
 
 let store: ReturnType<typeof configureStore>;
