@@ -60,12 +60,12 @@ module.exports = {
       template: "./public/index.html", // Adjust the path if needed
       filename: "index.html",
     }),
-    // new InjectManifest({
-    //   swSrc: "./src/workbox.ts",
-    //   swDest: "service-worker.js",
-    //   maximumFileSizeToCacheInBytes: 5000000,
-    //   exclude: [/\.LICENSE\./, /\.map$/],
-    // }),
+    new InjectManifest({
+      swSrc: "./src/workbox.ts",
+      swDest: "service-worker.js",
+      maximumFileSizeToCacheInBytes: 5000000,
+      exclude: [/\.LICENSE\./, /\.map$/],
+    }),
   ],
   devtool: "cheap-module-source-map",
   devServer: {
