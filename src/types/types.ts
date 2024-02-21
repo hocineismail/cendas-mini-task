@@ -3,6 +3,7 @@ import { ChecklistDocType, ItemDocType, TaskDocType } from "./schema"
 export interface ITask {
     title: string
     description?: string,
+
     selectedColor?: string,
 }
 
@@ -39,3 +40,16 @@ export interface IUpdateStatus {
 
 
 
+export interface TaskTarget {
+    task_id: string
+}
+
+export interface ChecklistTarget {
+    checklist_id: string
+
+}
+
+export interface ItemTarget extends TaskTarget, ChecklistTarget {
+    item_id: string
+
+}

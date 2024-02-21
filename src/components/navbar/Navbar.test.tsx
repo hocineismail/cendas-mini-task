@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Navbar from "./Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 interface LocalStorageMock {
   getItem: (key: string) => string | null;
   setItem: (key: string, value: string) => void;
@@ -31,22 +31,13 @@ beforeEach(() => {
   jest.clearAllMocks();
   Object.defineProperty(window, "localStorage", { value: localStorageMock });
 });
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: jest.fn(),
-}));
+
 describe("Navbar component", () => {
   test("render username and logout", () => {
     // set username
     localStorageMock.setItem("username", "testUser");
 
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Navbar />
-        </Routes>
-      </BrowserRouter>
-    );
+    render(<Navbar />);
 
     // Check the current username has rendered
     const usernameElement = screen.getByText("testUser");

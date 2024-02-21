@@ -3,9 +3,9 @@ import getDatabase from "@db/database";
 
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
-import { ITask, IChecklist, ITodo, IUpdateStatus } from '@type/types';
-import { ItemDocType } from "@type/schema";
-import { GetThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk";
+import { ITask, IChecklist, ITodo, IUpdateStatus, TaskTarget, ChecklistTarget, ItemTarget } from '@type/types';
+import { ChecklistDocType, ItemDocType } from "@type/schema";
+
 
 
 
@@ -185,6 +185,68 @@ const updateItemStatusAsync = createAsyncThunk('tasks/updateItemStatus', async (
         throw new Error('Failed to fetch newChecklists');
     }
 });
+
+
+
+// Create an asynchronous thunk for updating an item's status
+const deleteTaskAsync = createAsyncThunk('tasks/deleteTask', async ({ task_id }: TaskTarget) => {
+    try {
+        // Find the current task in the database
+        const db = await getDatabase();
+
+        // Find the target item based on the item_id
+        await db.tasks.findOne().where("_id").eq(task_id).remove();
+        const checklists = await db.checklists.find().where("task").eq(task_id).remove();
+        checklists.forEach(async (checklist: ChecklistDocType) => {
+            const checklist_id = checklist._id
+            await db.items.find().where("checklist").eq(checklist_id).remove();
+
+        })
+        return task_id
+    } catch (error) {
+        // Throw an error if there's an issue with the database operation
+        throw new Error('Failed to fetch newChecklists');
+    }
+});
+
+
+
+const deleteChecklistAsync = createAsyncThunk('tasks/deleteChecklist', async ({ checklist_id }: ChecklistTarget) => {
+    try {
+        // Find the current task in the database
+        const db = await getDatabase();
+
+        // Find the target item based on the item_id
+        const checklist = await db.checklists.findOne().where("_id").eq(checklist_id).remove();
+        await db.items.find().where("checklist").eq(checklist_id).remove();
+
+        return {
+            checklist_id,
+            task_id: checklist.task
+        }
+    } catch (error) {
+        // Throw an error if there's an issue with the database operation
+        throw new Error('Failed to fetch newChecklists');
+    }
+});
+const deleteItemAsync = createAsyncThunk('tasks/deleteItem', async ({ checklist_id, task_id, item_id }: ItemTarget) => {
+    try {
+        // Find the current task in the database
+        const db = await getDatabase();
+
+        // Find the target item based on the item_id
+        await db.items.findOne().where("_id").eq(item_id).remove();
+
+
+        return {
+            checklist_id, task_id, item_id
+        }
+    } catch (error) {
+        // Throw an error if there's an issue with the database operation
+        throw new Error('Failed to fetch newChecklists');
+    }
+});
+
 export {
-    fetchTasksAsync, addTaskAsync, addChecklistAsync, addItemAsync, updateItemStatusAsync
+    deleteItemAsync, fetchTasksAsync, addTaskAsync, addChecklistAsync, addItemAsync, updateItemStatusAsync, deleteTaskAsync, deleteChecklistAsync
 }

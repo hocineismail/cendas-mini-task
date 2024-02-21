@@ -8,6 +8,9 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { IChecklistItem } from "@type/types";
 
 import styled from "styled-components";
+import { deleteChecklistAsync } from "@store/actions/tasksActions";
+import { useAppDispatch } from "@store/hooks";
+import { FiTrash2 } from "react-icons/fi";
 
 type Props = {
   checklists: IChecklistItem[];
@@ -43,6 +46,12 @@ interface Item {
 }
 function ChecklistDropDown({ item, length, index, task_id }: Item) {
   const [isOpenChecklist, setIsOpen] = React.useState(false);
+  const dispatch = useAppDispatch();
+  const handleDelete = (event: React.MouseEvent<HTMLSpanElement>) => {
+    // Prevent the click event from propagating to the parent
+    event.stopPropagation();
+    dispatch(deleteChecklistAsync({ checklist_id: item._id }));
+  };
   return (
     <>
       <ItemList
@@ -52,6 +61,9 @@ function ChecklistDropDown({ item, length, index, task_id }: Item) {
         onClick={() => setIsOpen(!isOpenChecklist)}
         style={{ cursor: "pointer", position: "relative" }}
       >
+        <DeleteButton onClick={handleDelete}>
+          <FiTrash2 size={20} />
+        </DeleteButton>
         <DropdownArrow size={18} isOpen={isOpenChecklist} />
         Checklist {index + 1}
       </ItemList>
@@ -85,4 +97,11 @@ const DropdownArrow = styled(IoMdArrowDropdown)<TDropdown>`
   top: 10px;
   transform: ${(props) => (props.isOpen ? "rotate(0deg)" : "rotate(90deg)")};
   transition: 0.3s;
+`;
+const DeleteButton = styled.div`
+  position: absolute;
+  right: 50px;
+  top: 10px;
+  color: red;
+  cursor: pointer;
 `;

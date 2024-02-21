@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
-import { fetchTasksAsync } from "@store/actions/tasksActions";
+import { deleteTaskAsync, fetchTasksAsync } from "@store/actions/tasksActions";
 import ChecklistsSection from "@component/checklists/ChecklistsSection";
 import { ItemList, List } from "@component/list";
 import styled from "styled-components";
 import { ITaskItem } from "@type/types";
 import { cleaup } from "@store/reducers/tasksSlice";
+import { FiTrash2 } from "react-icons/fi";
 
 // TasksSection Component
 export default function TasksSection() {
@@ -56,11 +57,30 @@ interface TaskContentProps {
 }
 // TaskContent Component: Displays the content of a task, including title, description, and associated checklists.
 function TaskContent({ item }: TaskContentProps) {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteItem = (event: React.MouseEvent<HTMLSpanElement>) => {
+    // Prevent the click event from propagating to the parent
+    event.stopPropagation();
+    dispatch(deleteTaskAsync({ task_id: item._id }));
+  };
+
   return (
     <Wrapper data-testid="tasks-section">
       <List data-testid="task-section-list">
         {/* Task title and description */}
-        <ItemList data-testid="task-section-title" priority={1} normal bb bt>
+        <ItemList
+          data-testid="task-section-title"
+          priority={1}
+          normal
+          bb
+          bt
+          style={{ position: "relative" }}
+        >
+          <DeleteButton onClick={handleDeleteItem}>
+            <FiTrash2 size={20} />
+          </DeleteButton>
+
           {item.title}
           <TaskDescription
             color={item?.description?.color}
@@ -93,4 +113,11 @@ const Wrapper = styled.div`
 const TaskDescription = styled.div<TaskDescriptionProps>`
   font-size: 12px;
   color: ${(props) => props.color || "initial"};
+`;
+const DeleteButton = styled.div`
+  position: absolute;
+  right: 50px;
+  top: 20px;
+  color: red;
+  cursor: pointer;
 `;

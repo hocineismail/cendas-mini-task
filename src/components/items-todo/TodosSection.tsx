@@ -3,8 +3,12 @@ import AddItemlist from "./AddItemTodo";
 import { ItemList, List } from "@component/list";
 import Icon from "@component/icon/Icon";
 import { useAppDispatch } from "@store/hooks";
-import { updateItemStatusAsync } from "@store/actions/tasksActions";
+import {
+  deleteItemAsync,
+  updateItemStatusAsync,
+} from "@store/actions/tasksActions";
 import { ItemDocType } from "@type/schema";
+import { FiTrash2 } from "react-icons/fi";
 
 type Props = {
   ItemsTodo: ItemDocType[];
@@ -32,7 +36,20 @@ export default function ItemsTodoSection({
       })
     );
   };
-
+  const handleDelete = (
+    event: React.MouseEvent<HTMLSpanElement>,
+    item: ItemDocType
+  ) => {
+    // Prevent the click event from propagating to the parent
+    event.stopPropagation();
+    dispatch(
+      deleteItemAsync({
+        item_id: item._id,
+        task_id: task_id,
+        checklist_id,
+      })
+    );
+  };
   return (
     <SectionContainer>
       <List>
@@ -57,8 +74,11 @@ export default function ItemsTodoSection({
             color={item.color}
             disabled={item.status}
             onClick={() => handleUpdateStatus(item)}
+            style={{ position: "relative" }}
           >
-            {/* Container for displaying emoji */}
+            <DeleteButton onClick={(event) => handleDelete(event, item)}>
+              <FiTrash2 size={20} />
+            </DeleteButton>
             <EmojiContainer>{item.emoji}</EmojiContainer>
             <div>
               {item.name} <br />
@@ -103,4 +123,11 @@ const StyledTitle = styled.div`
 const StyledStepCount = styled.div`
   text-align: right;
   padding: 5px;
+`;
+const DeleteButton = styled.div`
+  position: absolute;
+  right: 50px;
+  top: 20px;
+  color: red;
+  cursor: pointer;
 `;

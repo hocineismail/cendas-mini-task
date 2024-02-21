@@ -1,7 +1,7 @@
 import { createSlice, } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
-import { addItemAsync, fetchTasksAsync, addTaskAsync, addChecklistAsync, updateItemStatusAsync } from '../actions/tasksActions';
+import { addItemAsync, fetchTasksAsync, addTaskAsync, addChecklistAsync, updateItemStatusAsync, deleteTaskAsync, deleteChecklistAsync, deleteItemAsync } from '../actions/tasksActions';
 import { IChecklistItem, ITaskItem, ITasksSlice } from '@type/types';
 import { ItemDocType } from '@type/schema';
 
@@ -95,7 +95,42 @@ export const tasksSlice = createSlice({
                     }
                     return task;
                 });
+            }).addCase(deleteTaskAsync.fulfilled, (state, action) => {
+                state.tasks = state.tasks.filter((item: ITaskItem) => item._id !== action.payload)
+            }).addCase(deleteChecklistAsync.fulfilled, (state, action) => {
+                console.log(action)
+                const {
+                    checklist_id,
+                    task_id } = action.payload
+
+                state.tasks = state.tasks.map((item) => {
+                    if (item._id === task_id) {
+                        item.checklists = item.checklists.filter((item: IChecklistItem) => item._id !== checklist_id)
+                    }
+                    return item
+                })
+            }).addCase(deleteItemAsync.fulfilled, (state, action) => {
+
+                const { task_id, checklist_id, item_id } = action.payload;
+
+                state.tasks = state.tasks.map((task: ITaskItem) => {
+                    if (task._id === task_id) {
+                        const updatedChecklists = task.checklists.map((checklist: IChecklistItem) => {
+                            if (checklist_id === checklist._id) {
+                                const updatedItems = checklist.items.filter((item: ItemDocType) => item._id !== item_id);
+
+                                return { ...checklist, items: updatedItems };
+                            }
+                            return checklist;
+                        });
+
+                        return { ...task, checklists: updatedChecklists };
+                    }
+                    return task;
+                })
             })
+
+
     },
 })
 
