@@ -12,7 +12,7 @@ export default function Layout({ children }: Props) {
   return (
     <div data-test-id>
       {/* Navbar component */}
-      <Navbar data-testid="navbar-id" />
+      <Navbar data-testid="navigation" />
 
       {/* Content area with Container component */}
       <StyledContent data-testid="content-id">

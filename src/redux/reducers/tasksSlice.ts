@@ -19,7 +19,12 @@ export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-
+        cleaup: (state) => {
+            state.tasks = []
+            state.isLoading = true
+            state.status = null
+            state.error = null
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -98,5 +103,5 @@ export const tasksSlice = createSlice({
 
 // Other code such as selectors can use the imported `RootState` type
 export const tasksState = (state: RootState) => state.tasks;
-
+export const { cleaup } = tasksSlice.actions;
 export default tasksSlice.reducer;

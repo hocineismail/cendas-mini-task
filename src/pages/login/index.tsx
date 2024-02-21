@@ -22,7 +22,7 @@ export default function Login() {
     }
     // Get the database instance
     const db = await getDatabase();
-
+    if (!db) return alert("Something wrong");
     // Check if the user already exists in the database
     const user = await db.users
       .findOne({

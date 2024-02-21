@@ -28,6 +28,8 @@ const createDatabase = async (): Promise<RxDatabase> => {
     const db = await createRxDatabase({
       name: process.env.REACT_APP_DATABASE || "default-database",
       storage: getRxStorageDexie(),
+      // other configurations
+      ignoreDuplicate: true,
     });
 
     // Add collections to the database
@@ -43,14 +45,9 @@ const createDatabase = async (): Promise<RxDatabase> => {
 // Function to get the database instance
 const getDatabase = async (): Promise<RxDatabase> => {
   if (!dbPromise) {
-    try {
-      // If the database instance doesn't exist, create it
-      dbPromise = await createDatabase();
-      return dbPromise;
-    } catch (error) {
-      console.error("Error getting database:", error);
-      throw error; // Rethrow the error to handle it at a higher level if needed
-    }
+    // If the database instance doesn't exist, create it
+    dbPromise = await createDatabase();
+    return dbPromise;
   } else {
     return dbPromise;
   }

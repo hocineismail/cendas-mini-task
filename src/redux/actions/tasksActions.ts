@@ -5,13 +5,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from 'uuid';
 import { ITask, IChecklist, ITodo, IUpdateStatus } from '@type/types';
 import { ItemDocType } from "@type/schema";
+import { GetThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 
 
 
 // Define the async thunk
-const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async () => {
-
+const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async (_, thunkAPI: GetThunkAPI<any>) => {
+    const currentState = await thunkAPI.getState();
+    console.log(currentState)
     const db = await getDatabase();
     const currentUser = await db.users.findOne({
         selector: {

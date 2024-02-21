@@ -7,8 +7,6 @@ import Login from "@pages/login";
 import PrivateRoutes from "./HOC/ProtectedRoute";
 
 export default function App() {
-  console.log(process.env.REACT_APP_API_KEY);
-
   return (
     <BrowserRouter>
       <Routes>

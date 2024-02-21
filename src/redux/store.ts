@@ -5,7 +5,8 @@ import tasksSlice from "./reducers/tasksSlice";
 export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   reducer: {
-    tasks: tasksSlice
+    tasks: tasksSlice,
+
   },
 });
 

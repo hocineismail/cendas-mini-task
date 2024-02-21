@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { fetchTasksAsync } from "@store/actions/tasksActions";
-
 import ChecklistsSection from "@component/checklists/ChecklistsSection";
-
 import { ItemList, List } from "@component/list";
-
 import styled from "styled-components";
-
 import { ITaskItem } from "@type/types";
+import { cleaup } from "@store/reducers/tasksSlice";
 
 // TasksSection Component
 export default function TasksSection() {
@@ -23,6 +20,11 @@ export default function TasksSection() {
     // Memoize dispatch function
 
     dispatch(fetchTasksAsync());
+
+    //clean our store
+    return () => {
+      dispatch(cleaup());
+    };
   }, []);
   // Loading state: Display a loading message
   if (isLoading) {

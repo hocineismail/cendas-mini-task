@@ -1,7 +1,6 @@
 import Container from "@component/container/Container";
 import { ItemList, List } from "@component/list";
 import styled, { css } from "styled-components";
-import { Navigate } from "react-router-dom";
 
 // Navbar Component
 export default function Navbar() {
@@ -12,7 +11,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     // Use Navigate component to navigate to the login page
-    return <Navigate to="/login" />;
+    window.location.href = "/login";
   };
 
   return (
