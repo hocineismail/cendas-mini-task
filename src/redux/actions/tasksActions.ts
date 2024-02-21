@@ -11,7 +11,7 @@ import { GetThunkAPI } from "@reduxjs/toolkit/dist/createAsyncThunk";
 
 
 // Define the async thunk
-const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async (_, thunkAPI: GetThunkAPI<any>) => {
+const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async (_, thunkAPI) => {
     const currentState = await thunkAPI.getState();
     console.log(currentState)
     const db = await getDatabase();
@@ -24,12 +24,12 @@ const fetchTasksAsync = createAsyncThunk('tasks/fetchTasks', async (_, thunkAPI:
     if (!currentUser) {
         throw new Error('User not Found');
     }
-    const tasks = await db.tasks.find().where("user").eq(currentUser._id).exec();
+    const tasks = await db.tasks.find().where("user").sort({ createdAt: "desc" }).eq(currentUser._id).exec();
     const taskPromise = tasks.map(async task => {
 
         const checklists = await db.checklists.find().where("task").eq(task._id).exec();
         const checkiltsPrimise = checklists.map(async item => {
-            const items = await db.items.find().where("checklist").eq(item._id).exec()
+            const items = await db.items.find().where("checklist").sort({ createdAt: "asc" }).eq(item._id).exec()
             const result = {
                 ...item._data,
                 items: items.map((item) => item._data)
