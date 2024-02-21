@@ -1,4 +1,13 @@
-# Features:
+<div style="display: flex; flex-direction: row;">
+  <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example1.png?raw=true" alt="Example 1" width="400" />
+   <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example2.png?raw=true" alt="Example 2" width="400" />
+</div>
+<div style="display: flex; flex-direction: row;">
+  <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example3.png?raw=true" alt="Example 3" width="400" />
+   <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example4.png?raw=true" alt="Example 4" width="400" />
+</div>
+
+# Tasks:
 
 1. **Technology Stack:**
 
@@ -13,7 +22,7 @@
 
 2. **Task Management Features:**
 
-   1. **User Authentication:**
+   1. **User:**
 
       - New users can seamlessly create an account on our App without password.
       - Returning users can easily access their accounts.
@@ -50,17 +59,24 @@ To run program, run the following command.
 1. Use the terminal to execute the following commands:
 
    - Use `cd cendas-mini-task` to navigate to the "cendas-mini-task" directory where the frontend code is located
-   - Use `npm install -f` or `yarn install  -f` to install the dependencies for the React application.
+   - Use `npm install` or `yarn install` to install the dependencies for the React application.
    - Use`npm start` or `yarn start`to run the application
+   - Open your browser on `http://localhost:3000` to see the page
 
-1. Open your browser on `http://localhost:3000` to see the page
+## 📣📣📣Additional Notes📣📣📣
 
-### 🔌 Running Test
+If you encounter any dependency resolution issues during installation, consider using the `npm install -f` to force the installation. This can be helpful in cases where there are conflicting dependencies.
+
+### 🔌 Running Test and Linting
 
 1. To run tests, run the following command.
 
 ```bash
   npm run test
+```
+
+```bash
+  npm run lint
 ```
 
 ### 🏢 Production
@@ -118,9 +134,11 @@ Considering you have an intricate backend with numerous functionalities and a fr
    overcoming challenges in transitioning to an offline-first approach with GraphQL involved identifying critical assets for offline access, such as user forms, video editing tools, and recent activity. Solutions included adapting GraphQL queries for local data fetching and synchronization, implementing service workers for asset caching, and employing Apollo Client for state management and offline data handling. These strategies ensured seamless offline functionality and data integrity, enhancing the user experience regardless of network connectivity.
 
 4. Are there any particular tools, libraries, or practices you've found especially helpful or problematic in this context?
+
    Tools and Libraries: Apollo Client is highly recommended for GraphQL data management, offering features like caching and local state management beneficial for offline functionality. Service Workers are crucial for caching strategies, and IndexedDB is a robust choice for local storage. Avoiding overly complex synchronization logic can mitigate potential issues.
 
 5. Are there any emerging technologies or trends that might influence how we think about offline experiences?
+
    Emerging Trends: Progressive Web Apps (PWAs) are shaping the future of offline experiences, offering app-like functionalities with offline support. WebAssembly (Wasm) is emerging as a technology that enhances performance, crucial for processing data offline. Edge Computing is also gaining traction, pushing data processing closer to the user, reducing the need for constant connectivity.
 
 ## Pages
