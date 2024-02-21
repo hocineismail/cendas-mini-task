@@ -1,8 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
 import { addItemAsync, fetchTasksAsync, addTaskAsync, addChecklistAsync, updateItemStatusAsync } from '../actions/tasksActions';
-import { ITasksSlice } from '@type/types';
+import { IChecklistItem, ITaskItem, ITasksSlice } from '@type/types';
+import { ItemDocType } from '@type/schema';
 
 
 // Define the initial state using that type
@@ -48,16 +49,17 @@ export const tasksSlice = createSlice({
                 })
 
             }).addCase(addItemAsync.fulfilled, (state, action) => {
+                console.log("Try to fix it")
                 console.log(action.payload)
                 const { task_id, checklist_id, item } = action.payload
                 const newData = { ...item._data }
-                state.tasks = state?.tasks?.map((task) => {
+                state.tasks = state?.tasks?.map((task: ITaskItem) => {
                     if (task._id === task_id) {
-                        task.checklists = task?.checklists.map((item: any) => {
-                            if (checklist_id === newData.checklist) {
-                                item.items = [...item.items, newData]
+                        task.checklists = task?.checklists.map((checkListItem: IChecklistItem) => {
+                            if (checklist_id === checkListItem._id) {
+                                checkListItem.items = [...checkListItem.items, newData]
                             }
-                            return item
+                            return checkListItem
                         })
                     }
                     return task
@@ -67,11 +69,11 @@ export const tasksSlice = createSlice({
 
                 const { task_id, checklist_id, item_id, item } = action.payload;
 
-                state.tasks = state.tasks.map((task) => {
+                state.tasks = state.tasks.map((task: ITaskItem) => {
                     if (task._id === task_id) {
-                        const updatedChecklists = task.checklists.map((checklist: any) => {
+                        const updatedChecklists = task.checklists.map((checklist: IChecklistItem) => {
                             if (checklist_id === checklist._id) {
-                                const updatedItems = checklist.items.map((existingItem: any) => {
+                                const updatedItems = checklist.items.map((existingItem: ItemDocType) => {
 
                                     if (item_id === existingItem._id) {
 
