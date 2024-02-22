@@ -1,5 +1,7 @@
 const path = require("path");
-const { InjectManifest } = require("workbox-webpack-plugin");
+
+const WorkboxPlugin = require("workbox-webpack-plugin");
+
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -7,7 +9,7 @@ const ErrorOverlayPlugin = require("error-overlay-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: "./src/index.tsx",
   target: "web",
   output: {
@@ -48,7 +50,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new Dotenv(),
     new ErrorOverlayPlugin(),
-    // ,
+
     new CopyPlugin({
       patterns: [
         { from: "*.png", context: "public" },
@@ -60,17 +62,18 @@ module.exports = {
       template: "./public/index.html", // Adjust the path if needed
       filename: "index.html",
     }),
-    new InjectManifest({
-      swSrc: "./src/workbox.ts",
-      swDest: "service-worker.js",
-      maximumFileSizeToCacheInBytes: 5000000,
-      exclude: [/\.LICENSE\./, /\.map$/],
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+      // maximumFileSizeToCacheInBytes: 5000000,
     }),
   ],
   devtool: "cheap-module-source-map",
   devServer: {
     static: path.resolve(__dirname, "build"),
-    port: 3000,
+    port: 3001,
     //historyApiFallback is important for router react :)
     historyApiFallback: true,
   },
