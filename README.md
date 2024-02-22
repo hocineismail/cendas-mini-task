@@ -1,3 +1,4 @@
+# LINK ===> [DEMO](https://deployment--melodic-gumption-1c183e.netlify.app/)
 <div style="display: flex; flex-direction: row;">
   <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example1.png?raw=true" alt="Example 1" width="400" />
    <img src="https://github.com/hocineismail/cendas-mini-task/blob/main/examples/example2.png?raw=true" alt="Example 2" width="400" />
@@ -86,7 +87,7 @@ If you encounter any dependency resolution issues during installation, consider 
 ```bash
   npm run build
 ```
-
+[DEMO](https://deployment--melodic-gumption-1c183e.netlify.app/)
 ### 😌 Answers
 
 I completed the mini tasks in 3 days, including:
